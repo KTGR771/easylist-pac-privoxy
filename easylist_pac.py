@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 __author__ = 'stsmith'
 
+### Usage: python easylist_pac.py -b 127.0.0.1:8119 -p 127.0.0.1:3128 -P proxy.pac.orig -d ~/Desktop/
+
 # easylist_pac: Convert EasyList Tracker and Adblocking rules to an efficient Proxy Auto Configuration file
 
 # Copyright (C) 2017 by Steven T. Smith <steve dot t dot smith at gmail dot com>, GPL
@@ -120,10 +122,22 @@ class EasyListPAC:
 
     def easylists_download_latest(self):
         easylist_url = 'https://easylist.to/easylist/easylist.txt'
+        easylist_china = 'https://easylist-downloads.adblockplus.org/easylistchina.txt'
+        #easylist_china = 'http://localhost/site/adb/easylistchina.txt'
         easyprivacy_url = 'https://easylist.to/easylist/easyprivacy.txt'
+        #easyprivacy_url = 'http://localhost/site/adb/easyprivacy.txt'
         fanboy_annoyance_url = 'https://easylist.to/easylist/fanboy-annoyance.txt'
         fanboy_antifacebook = 'https://raw.githubusercontent.com/ryanbr/fanboy-adblock/master/fanboy-antifacebook.txt'
-        self.download_list = [fanboy_antifacebook, fanboy_annoyance_url, easyprivacy_url, easylist_url] + self.extra_easylist_urls
+        cjx_annoyance = 'https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjx-annoyance.txt'
+        #adbyby_url = 'https://raw.githubusercontent.com/adbyby/xwhyc-rules/master/lazy.txt'
+        chengfeng_url = 'https://raw.githubusercontent.com/xinggsf/Adblock-Plus-Rule/master/ABP-FX.txt'
+        #mix_url = 'https://gitee.com/halflife/list/raw/master/ad.txt'
+        #https://gitee.com/banbendalao/adguard/raw/master/ADgk.txt
+
+        #kool_proxy_url = "https://kprules.b0.upaiyun.com/koolproxy.txt"
+        #kool_daily = "https://kprules.b0.upaiyun.com/daily.txt"
+        #self.download_list = [fanboy_antifacebook, fanboy_annoyance_url, easyprivacy_url, easylist_url ] + self.extra_easylist_urls
+        self.download_list = [fanboy_antifacebook, fanboy_annoyance_url, easylist_china, cjx_annoyance, chengfeng_url] + self.extra_easylist_urls
         self.file_list = []
         for url in self.download_list:
             fname = os.path.basename(url)
@@ -830,7 +844,7 @@ var hasOwnProperty = function(obj, prop) {
 // Done Setting Up //
 /////////////////////
 
-// debug with Chrome at chrome://net-export
+// debug with Chrome at chrome://net-internals/#events
 // alert("Debugging message.")
 
 //////////////////////////////////
@@ -925,7 +939,7 @@ function EasyListFindProxyForURL(url, host)
     //////////////////////////////////////////////////////////////////////////////
     // HTTPS: https scheme can only use domain information                      //
     // unless PacHttpsUrlStrippingEnabled == false [Chrome] or                  //
-    // network.proxy.autoconfig_url.include_path == true [Firefox, about:config]              //
+    // network.proxy.autoconfig_url.include_path == true [firefox]              //
     // E.g. on macOS:                                                           //
     // defaults write com.google.Chrome PacHttpsUrlStrippingEnabled -bool false //
     // Check setting at page chrome://policy                                    //
